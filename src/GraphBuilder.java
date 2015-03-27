@@ -51,8 +51,8 @@ public class GraphBuilder {
 	
 	public Graph build() {
 
-		//for(int s = 12; s >= 3; s--) {
-		for(int s = 12; s >= 11; s--) {
+		for(int s = 12; s >= 3; s--) {
+		//for(int s = 12; s >= 11; s--) {
 			for(int w = 1; w <= s; w++) {
 				if(s%w != 0) // only if the part is possible
 					continue;
@@ -90,8 +90,6 @@ public class GraphBuilder {
 				switch(pb.map[q][p]) {
 				case Jambon:
 					njambon++;
-					if(njambon >= 3)
-						return true;
 					break;
 				default:
 					break;
@@ -99,7 +97,9 @@ public class GraphBuilder {
 			}
 				
 		}
-		
+
+		if(njambon == 3)
+			return true;
 		return false;
 	}
 	
