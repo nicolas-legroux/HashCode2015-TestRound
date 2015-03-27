@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Set;
 
 public class Cluster_search {
@@ -8,7 +9,12 @@ public class Cluster_search {
 	
 	public Cluster_search(){
 		
-		pb.load("data/test_round.in");
+		try {
+			pb.load("data/test_round.in");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		clusters=new int[pb.height][pb.width];
 		int cluster_compt=0;
 		int ham_compt=0;
