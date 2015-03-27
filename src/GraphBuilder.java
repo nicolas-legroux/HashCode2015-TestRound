@@ -66,18 +66,20 @@ public class GraphBuilder {
 	
 	private void addPartOfSize(int h, int w) {
 		System.out.println("Processing for parts of w = " + w + " and h = " + h + " for surface "+ (h*w));
-		
+		int npart = 0;
 		for(int i = 0; i < pb.height - h; i++) {
 			for(int j = 0; j < pb.width - w; j++) {
 				if(isPart(i, j, h, w)) {
 					//System.out.println("Adding a part");
 					Part pa = new Part(i,j,w,h);
 					g.addNode(pa);
+					npart++;
 					addEdgeAndPresence(pa, i, j, h, w);
 				}
 			}
 		}
 		
+		System.out.println("Found " + npart + " parts");
 	}
 	
 	private boolean isPart(int i, int j, int h, int w) {
