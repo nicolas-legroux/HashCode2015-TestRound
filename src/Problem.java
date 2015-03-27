@@ -14,7 +14,7 @@ public class Problem {
 	int height;
 	int min_ham;
 	int surf_max;
-	ArrayList<ArrayList<Type> > map;
+	Type[][] map;
 	
 
 	void load(String filename) throws IOException {
@@ -26,22 +26,23 @@ public class Problem {
 		width=Integer.parseInt(ParsedData[1]);
 		min_ham=Integer.parseInt(ParsedData[2]);
 		surf_max=Integer.parseInt(ParsedData[3]);
-		pizzaData=data.readLine();
-		while(!pizzaData.isEmpty()){
-			ArrayList<Type> Pcase=new ArrayList<Type>();
-			if (pizzaData.equals("H")){
-				Pcase.add(Type.Jambon);
-				
-			}
-			else{
-				Pcase.add(Type.Tomates);
-				
-			}
-			map.add(Pcase);
-			
+		
+		
+		
+		Type[][] map=new Type[height][width];
+		for (int i=0;i<height;i++){
 			pizzaData=data.readLine();
 			
+			for (int j=0;j<width;j++){
+				map[i][j]=Type.Tomates;
+				String c=pizzaData.substring(j, j+1);
+				if (c.equals("H")){
+					map[i][j]=Type.Jambon;
+				}
+			}
 		}
+
+
 		
 	}
 
