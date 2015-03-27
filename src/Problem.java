@@ -29,7 +29,8 @@ public class Problem {
 		
 		
 		
-		Type[][] map=new Type[height][width];
+		map=new Type[height][width];
+		
 		for (int i=0;i<height;i++){
 			pizzaData=data.readLine();
 			
@@ -40,10 +41,22 @@ public class Problem {
 					map[i][j]=Type.Jambon;
 				}
 			}
+		}		
+	}
+	
+	void print(){
+		for(int i=0; i< height; i++){
+			for(int j=0; j<width; j++){
+				if (map[i][j] == Type.Jambon){
+					System.out.print("H ");
+				}
+				else{
+					System.out.print("T ");
+				}
+			}
+			
+			System.out.print("\n");			
 		}
-
-
-		
 	}
 
 }
