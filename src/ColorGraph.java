@@ -5,21 +5,25 @@ import java.util.Map.Entry;
 
 
 public class ColorGraph {
+
+	HashMap<Part, Integer> neighbors;
+	static ColorGraph colorizer;
 	
 	class CompareParts implements Comparator<Part> {
 
 		@Override
 		public int compare(Part arg0, Part arg1) {
-			// TODO Auto-generated method stub
-			return 0;
+			return colorizer.neighbors.get(arg0) - colorizer.neighbors.get(arg1);
 		}
-		;
 	}
 	
-	static Solution color(Graph g) {
+	public ColorGraph() {
+		neighbors = new HashMap<Part, Integer>();
+	}
+	
+	Solution color(Graph g) {
 		Solution solution = new Solution();
 		
-		HashMap<Part, Integer> neighbors = new HashMap<Part, Integer>();
 		for (Entry<Part, HashSet<Part>> e : g.graph.entrySet()) {
 			neighbors.put(e.getKey(), e.getValue().size());
 		}
