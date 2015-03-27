@@ -29,7 +29,7 @@ public class Problem {
 		
 		
 		
-		Type[][] map=new Type[height][width];
+		Type[][] map = new Type[height][width];
 		for (int i=0;i<height;i++){
 			pizzaData=data.readLine();
 			

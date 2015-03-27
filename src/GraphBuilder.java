@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import Problem.Type;
-
 
 public class GraphBuilder {
 	
@@ -83,7 +81,7 @@ public class GraphBuilder {
 		
 		for(int p = j; p < j + w; p++) {
 			for(int q = i; q < i + h; q++) {
-				switch(pb.map.get(p).get(q)) {
+				switch(pb.map[q][p]) {
 				case Jambon:
 					njambon++;
 					if(njambon >= 3)
@@ -99,10 +97,4 @@ public class GraphBuilder {
 		return false;
 	}
 	
-	public static void main(String[] args) {
-		
-		
-		GraphBuilder gb = new GraphBuilder();
-		gb.build();
-	}
 }
