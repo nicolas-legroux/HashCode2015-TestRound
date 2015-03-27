@@ -1,5 +1,4 @@
-import com.sun.javadoc.Type;
-
+import java.util.Set;
 
 public class Cluster_search {
 	Problem pb;
@@ -16,7 +15,7 @@ public class Cluster_search {
 		
 		for (int i=0;i<pb.height;i++){
 			for (int j=0;j<pb.width;j++){
-				if(cluster[i][j]==0 && pb.map[i][j].equals(Type.Jambon)){
+				if(clusters[i][j]==0 && pb.map[i][j].equals(Problem.Type.Jambon)){
 					trouverCluster(i,j);
 				}
 					
