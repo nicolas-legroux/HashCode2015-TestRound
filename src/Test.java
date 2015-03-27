@@ -1,13 +1,15 @@
+import java.io.IOException;
+
 
 public class Test {
 
 	/**
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
-		System.out.println("Hello world");
-		
-		
+	public static void main(String[] args) throws IOException {
+		Problem p = new Problem();
+		p.load("data/test_round.in");
 	}
 
 }
