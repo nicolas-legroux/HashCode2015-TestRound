@@ -17,8 +17,6 @@ public class Test {
 		GraphBuilder gb = new GraphBuilder(p);
 		gb.build();
 
-		
-
 	}
 
 }
