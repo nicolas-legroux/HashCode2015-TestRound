@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import Problem.Type;
-
 
 public class GraphBuilder {
 	
@@ -52,7 +50,7 @@ public class GraphBuilder {
 		}
 	}
 	
-	public void build() {
+	public Graph build() {
 		
 		for(int s = 12; s >= 3; s--) {
 			for(int w = 1; w <= s; w++) {
@@ -63,6 +61,7 @@ public class GraphBuilder {
 				
 		}
 		
+		return g;
 	}
 	
 	private void addPartOfSize(int h, int w) {
@@ -71,7 +70,10 @@ public class GraphBuilder {
 		for(int i = 0; i < pb.height - h; i++) {
 			for(int j = 0; j < pb.width - w; j++) {
 				if(isPart(i, j, h, w)) {
-					
+					//System.out.println("Adding a part");
+					Part pa = new Part(i,j,w,h);
+					g.addNode(pa);
+					addEdgeAndPresence(pa, i, j, h, w);
 				}
 			}
 		}
@@ -83,7 +85,7 @@ public class GraphBuilder {
 		
 		for(int p = j; p < j + w; p++) {
 			for(int q = i; q < i + h; q++) {
-				switch(pb.map.get(p).get(q)) {
+				switch(pb.map[q][p]) {
 				case Jambon:
 					njambon++;
 					if(njambon >= 3)
@@ -99,10 +101,4 @@ public class GraphBuilder {
 		return false;
 	}
 	
-	public static void main(String[] args) {
-		
-		
-		GraphBuilder gb = new GraphBuilder();
-		gb.build();
-	}
 }

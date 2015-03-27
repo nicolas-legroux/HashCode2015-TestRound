@@ -8,9 +8,14 @@ import java.util.PriorityQueue;
 public class ColorGraph {
 
 	HashMap<Part, Integer> neighbors;
-	static ColorGraph colorizer;
 	
 	class CompareParts implements Comparator<Part> {
+		
+		ColorGraph colorizer;
+		
+		CompareParts(ColorGraph colorizer) {
+			this.colorizer = colorizer;
+		}
 
 		@Override
 		public int compare(Part arg0, Part arg1) {
@@ -18,14 +23,19 @@ public class ColorGraph {
 		}
 	}
 	
-	public ColorGraph() {
+	static Solution color(Graph g) {
+		ColorGraph colorizer = new ColorGraph();
+		return colorizer.doColor(g);
+	}
+	
+	private ColorGraph() {
 		neighbors = new HashMap<Part, Integer>();
 	}
 	
-	Solution color(Graph g) {
+	private Solution doColor(Graph g) {
 		Solution solution = new Solution();
 
-		PriorityQueue<Part> queue = new PriorityQueue<Part>(g.graph.size(), new CompareParts());
+		PriorityQueue<Part> queue = new PriorityQueue<Part>(g.graph.size(), new CompareParts(this));
 		
 		for (Entry<Part, HashSet<Part>> e : g.graph.entrySet()) {
 			neighbors.put(e.getKey(), e.getValue().size());
