@@ -70,7 +70,10 @@ public class GraphBuilder {
 		for(int i = 0; i < pb.height - h; i++) {
 			for(int j = 0; j < pb.width - w; j++) {
 				if(isPart(i, j, h, w)) {
-					
+					//System.out.println("Adding a part");
+					Part pa = new Part(i,j,w,h);
+					g.addNode(pa);
+					addEdgeAndPresence(pa, i, j, h, w);
 				}
 			}
 		}

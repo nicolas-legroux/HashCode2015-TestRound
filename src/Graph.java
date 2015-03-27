@@ -16,6 +16,7 @@ public class Graph {
 	}
 	
 	void addPair(Part p1, Part p2) {
+		//System.out.println("Adding pair");
 		addLink(p1, p2);
 		addLink(p2, p1);
 	}
