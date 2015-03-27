@@ -8,11 +8,11 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
+
 		Problem problem = new Problem();
 		problem.load("data/test_round.in");
-		problem.print();
-		
-		
+		problem.print();	
+
 	}
 
 }
