@@ -8,11 +8,12 @@ public class Test {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		Problem p = new Problem();
-		p.load("data/test_round.in");
+		Problem problem = new Problem();
+		problem.load("data/test_round.in");
+		problem.print();
 		Graph graph = null;
 		Solution solution = ColorGraph.color(graph);
-		solution.print(p);
+		solution.print(problem);
 	}
 
 }
