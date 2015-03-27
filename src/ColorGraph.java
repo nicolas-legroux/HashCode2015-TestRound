@@ -1,3 +1,5 @@
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,26 +37,60 @@ public class ColorGraph {
 	private Solution doColor(Graph g) {
 		Solution solution = new Solution();
 
-		PriorityQueue<Part> queue = new PriorityQueue<Part>(g.graph.size(), new CompareParts(this));
+		//HashSet<Part> queue = new HashSet<Part>();
 		
 		for (Entry<Part, HashSet<Part>> e : g.graph.entrySet()) {
 			neighbors.put(e.getKey(), e.getValue().size());
-			queue.add(e.getKey());
+			//queue.add(e.getKey());
 		}
 		
-		while (!queue.isEmpty()) {
-			Part p = queue.poll();
-			HashSet<Part> n = g.graph.remove(p);
+		int count = g.graph.size();
+		
+		while (!neighbors.isEmpty()) {
+			Entry<Part, Integer> min = Collections.min(neighbors.entrySet(), new Comparator<Entry<Part, Integer>>() {
+			    public int compare(Entry<Part, Integer> entry1, Entry<Part, Integer> entry2) {
+			    	int s1 = (entry1.getKey().right + 1 - entry1.getKey().left)
+			    			* (entry1.getKey().bottom + 1 - entry1.getKey().top);
+			    	int s2 = (entry2.getKey().right + 1 - entry2.getKey().left)
+			    			* (entry2.getKey().bottom + 1 - entry2.getKey().top);
+			    	if (s1 == s2)
+			    		return entry1.getValue().compareTo(entry2.getValue());
+			    	else
+			    		return s2 - s1;
+			    }
+			});
 			
+			Part p = min.getKey();
+			solution.parts.add(p);
+			
+			count -= 1 + neighbors.get(p);
+			HashSet<Part> n = g.graph.get(p);
+			
+			//*
+			neighbors.remove(p);
+			for (Part part : n) {
+				neighbors.remove(part);
+			}
+			//*/
+
+			/*
 			for (Part part : n) {
 				queue.remove(part);
-				if (!g.graph.get(part).remove(p))
-					System.err.println("Missing edge !");
-				neighbors.put(part, neighbors.get(part) - 1);
-				queue.add(part);
+			}
+			//*/
+			
+			for (Part part : n) {
+				for (Part _part : g.graph.get(part)) {
+					if (neighbors.containsKey(_part)) {
+						//if (!g.graph.get(_part).remove(part))
+							//System.err.println("Missing edge !");
+						neighbors.put(_part, neighbors.get(_part) - 1);
+						//queue.add(_part);
+					}
+				}
 			}
 			
-			solution.parts.add(p);
+			System.out.println("Remaining nodes : " + count);
 		}
 		
 		return solution;

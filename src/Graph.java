@@ -14,6 +14,7 @@ public class Graph {
 	private void addLink(Part p1, Part p2) {
 		HashSet<Part> s1 = addNode(p1);
 		s1.add(p2);
+		//System.out.println("Neighbors : " + s1.size());
 	}
 	
 	void addPair(Part p1, Part p2) {
@@ -34,13 +35,16 @@ public class Graph {
 	void print() {
 		for (Entry<Part, HashSet<Part>> e : graph.entrySet()) {
 			e.getKey().print();
-			System.out.print(" -> ");
+			System.out.print(" -> " + e.getValue().size());
+			/*
 			for (Part part : e.getValue()) {
 				part.print();
 				System.out.print(", ");
 			}
+			//*/
 			System.out.print("\n");
 		}
+		System.out.println("Entries : " + graph.size());
 	}
 
 }

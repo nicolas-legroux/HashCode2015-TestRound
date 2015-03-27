@@ -26,6 +26,7 @@ public class Test {
 		Solution solution = ColorGraph.color(graph);
 		solution.print(problem);
 
+		solution.save("data/result.txt");
 	}
 
 }

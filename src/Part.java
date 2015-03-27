@@ -20,6 +20,15 @@ public class Part {
         Part key = (Part) o;
         return left == key.left && right == key.right && top == key.top && bottom == key.bottom;
     }
+
+    @Override
+    public int hashCode() {
+        int result = left;
+        result = 61 * result + right;
+        result = 61 * result + top;
+        result = 61 * result + bottom;
+        return result;
+    }
 	
 	boolean contains(int x, int y) {
 		return x >= left && x <= right && y >= top && y <= bottom;

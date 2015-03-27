@@ -50,8 +50,9 @@ public class GraphBuilder {
 	}
 	
 	public Graph build() {
-		
-		for(int s = 12; s >= 3; s--) {
+
+		//for(int s = 12; s >= 3; s--) {
+		for(int s = 12; s >= 11; s--) {
 			for(int w = 1; w <= s; w++) {
 				if(s%w != 0) // only if the part is possible
 					continue;
@@ -66,8 +67,8 @@ public class GraphBuilder {
 	private void addPartOfSize(int h, int w) {
 		System.out.println("Processing for parts of w = " + w + " and h = " + h + " for surface "+ (h*w));
 		int npart = 0;
-		for(int i = 0; i < pb.height - h; i++) {
-			for(int j = 0; j < pb.width - w; j++) {
+		for(int i = 0; i <= pb.height - h; i++) {
+			for(int j = 0; j <= pb.width - w; j++) {
 				if(isPart(i, j, h, w)) {
 					//System.out.println("Adding a part");
 					Part pa = new Part(i,j,w,h);
