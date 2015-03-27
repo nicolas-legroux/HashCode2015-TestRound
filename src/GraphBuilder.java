@@ -50,7 +50,7 @@ public class GraphBuilder {
 		}
 	}
 	
-	public void build() {
+	public Graph build() {
 		
 		for(int s = 12; s >= 3; s--) {
 			for(int w = 1; w <= s; w++) {
@@ -61,6 +61,7 @@ public class GraphBuilder {
 				
 		}
 		
+		return g;
 	}
 	
 	private void addPartOfSize(int h, int w) {

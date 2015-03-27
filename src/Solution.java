@@ -35,5 +35,19 @@ public class Solution {
 		
 		System.out.println("Done writing");
 	}
-
+	
+	void print(Problem p) {
+		for (int y = 0 ; y < p.height ; ++y) {
+			for (int x = 0 ; x < p.width ; ++x) {
+				for (Part part : parts) {
+					if (part.contains(x, y))
+						System.out.print("*");
+					else
+						System.out.print(" ");
+				}
+			}
+			System.out.print("\n");
+		}
+	}
+	
 }

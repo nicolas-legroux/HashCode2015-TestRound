@@ -18,11 +18,16 @@ public class ColorGraph {
 		}
 	}
 	
-	public ColorGraph() {
+	static Solution color(Graph g) {
+		colorizer = new ColorGraph();
+		return colorizer.doColor(g);
+	}
+	
+	private ColorGraph() {
 		neighbors = new HashMap<Part, Integer>();
 	}
 	
-	Solution color(Graph g) {
+	private Solution doColor(Graph g) {
 		Solution solution = new Solution();
 
 		PriorityQueue<Part> queue = new PriorityQueue<Part>(g.graph.size(), new CompareParts());
