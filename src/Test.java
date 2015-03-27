@@ -21,6 +21,7 @@ public class Test {
 
 		GraphBuilder gb = new GraphBuilder(p);
 		Graph graph = gb.build();
+		graph.print();
 		
 		Solution solution = ColorGraph.color(graph);
 		solution.print(problem);

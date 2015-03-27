@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 
 
 public class Graph {
@@ -27,6 +28,18 @@ public class Graph {
 			graph.put(p, s);
 		}
 		return s;
+	}
+	
+	void print() {
+		for (Entry<Part, HashSet<Part>> e : graph.entrySet()) {
+			e.getKey().print();
+			System.out.print(" -> ");
+			for (Part part : e.getValue()) {
+				part.print();
+				System.out.print(", ");
+			}
+			System.out.print("\n");
+		}
 	}
 
 }
