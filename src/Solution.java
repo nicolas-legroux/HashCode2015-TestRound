@@ -27,7 +27,7 @@ public class Solution {
 			bw.write(String.valueOf(part.top) + " " + 
 					String.valueOf(part.left) + " " +
 					String.valueOf(part.bottom) + " " +
-					String.valueOf(part.right));
+					String.valueOf(part.right) + "\n");
 		}	
 		
 		bw.close();
