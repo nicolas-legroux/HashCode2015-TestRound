@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashSet;
 
 
@@ -12,7 +13,7 @@ public class Solution {
 		parts = new HashSet<Part>();
 	}
 
-	void save(String filename) {
+	void save(String filename) throws IOException {
 		File file = new File(filename);
 		
 		if (!file.exists()) {
