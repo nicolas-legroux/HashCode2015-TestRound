@@ -1,29 +1,32 @@
-import java.util.Collection;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
-import java.util.PriorityQueue;
+import java.util.Random;
 
 public class ColorGraph {
 
-	HashMap<Part, Integer> neighbors;
+	HashMap<Part, Integer> neighbors;	
 	Problem pb;
 	
-	static Solution color(Graph g, Problem pb) {
-		ColorGraph colorizer = new ColorGraph(pb);
-		return colorizer.doColor(g);
-	}
+	private Solution bestSolution;
 	
-	private ColorGraph(Problem pb) {
+	public ColorGraph(Problem pb) {
 		this.pb = pb;
-		neighbors = new HashMap<Part, Integer>();
+		this.neighbors = new HashMap<Part, Integer>();		
+		this.bestSolution = new Solution(pb);		
 	}
 	
-	private Solution doColor(Graph g) {
+	public Solution solve(Solution baseSolution, int maxHam) {	
 		
-		Solution solution = new Solution(pb);
+		GraphBuilder gb = new GraphBuilder(pb, baseSolution, maxHam);
+		long startTimeGraphBuilding = System.currentTimeMillis();
+		Graph g = gb.build();
+		long endTimeGraphBuilding = System.currentTimeMillis();
+		System.out.println("Time to build the graph : " + (endTimeGraphBuilding-startTimeGraphBuilding) + "ms");
+		//graph.print();	
 		
 		for (Entry<Part, HashSet<Part>> e : g.graph.entrySet()) {
 			neighbors.put(e.getKey(), e.getValue().size());			
@@ -49,8 +52,9 @@ public class ColorGraph {
 			});
 			
 			Part p = min.getKey();
+			
 			//Add the part to the solution
-			solution.parts.add(p);
+			baseSolution.addPart(p);
 			
 			count -= 1 + neighbors.get(p);
 			HashSet<Part> n = g.graph.get(p);
@@ -72,6 +76,66 @@ public class ColorGraph {
 			//System.out.println("Remaining nodes : " + count);
 		}
 		
-		return solution;
+		System.out.println("Score of the solution : " + baseSolution.getScore());
+		
+		return baseSolution;
+	}
+	
+	public void solveWithRandomRemovals(double prob, int max_iterations){
+		
+		//Start initial solver
+		bestSolution = solve(bestSolution, 3);
+		
+		double probChange = prob;
+		
+		//Iterate
+		for(int i=0; i<max_iterations; i++){
+			
+			//Copy the best solution
+			Solution baseSolution = new Solution(bestSolution);
+			HashSet<Part> parts = new HashSet<Part>();
+			
+			Random random = new Random(25);
+			
+			for(Part p : baseSolution.getParts()){
+				if(random.nextDouble()<=probChange){
+					parts.add(p);
+				}
+			}
+			
+			baseSolution.resetParts(parts);
+			baseSolution = solve(baseSolution, 7);
+			
+			System.out.println("Iteration #" + (i+1));
+			
+			if(baseSolution.getScore()>=bestSolution.getScore()){
+				System.out.println("Improved the score : " + bestSolution.getScore() + " -> " + baseSolution.getScore());
+				if(baseSolution.getScore()>bestSolution.getScore()){
+					System.out.println("Writing to file...");
+					try {
+						baseSolution.save("results.txt");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				bestSolution = baseSolution;
+				probChange = prob;				
+			}	
+			else{
+				System.out.println("Did not improve best score which is : " + bestSolution.getScore());
+				probChange = Math.min((probChange + 0.02), 1.0);
+			}
+			
+			System.out.println("For the next iteration, p=" + probChange);
+			System.out.println("\n");
+		}
+		
+		
+		
+	}
+	
+	Solution getSolution(){
+		return bestSolution;
 	}
 }

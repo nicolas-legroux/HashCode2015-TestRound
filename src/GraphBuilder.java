@@ -10,8 +10,11 @@ public class GraphBuilder {
 	Problem pb;
 	Graph g;	
 	Map< Pair, List<Part> > intersectingParts;
+	Solution solution;
 	
-	GraphBuilder(Problem pb) {
+	int maxHam;
+	
+	GraphBuilder(Problem pb, Solution solution, int maxHam) {
 		this.pb = pb;
 		intersectingParts = new HashMap<Pair, List<Part>>();
 		this.g = new Graph();
@@ -20,6 +23,8 @@ public class GraphBuilder {
 				intersectingParts.put(new Pair(x, y), new LinkedList<Part>());
 			}
 		}
+		this.solution=solution;
+		this.maxHam = maxHam;
 	}
 	
 	private void addPresentPart(int x, int y, Part part) {
@@ -52,12 +57,12 @@ public class GraphBuilder {
 	}
 	
 	private void addPartsOfSize(int w, int h) {
-		System.out.println("Processing for parts of w = " + w + " and h = " + h + " for surface "+ (h*w));
+		//System.out.println("Processing for parts of w = " + w + " and h = " + h + " for surface "+ (h*w));
 		int numberParts = 0;
 		for(int y0 = 0; y0 <= pb.height - h; y0++) {
 			for(int x0 = 0; x0 <= pb.width - w; x0++) {
 				if(isPart(x0, y0, w, h)) {
-					System.out.println("Found part with x0=" + x0 + ", y0=" + y0 + " (w=" + w + ", h=" + h + ")");
+					//System.out.println("Found part with x0=" + x0 + ", y0=" + y0 + " (w=" + w + ", h=" + h + ")");
 					Part part = new Part(x0, y0, w, h);
 					g.addPart(part);
 					numberParts++;
@@ -66,7 +71,7 @@ public class GraphBuilder {
 			}
 		}
 		
-		System.out.println("Found " + numberParts + " parts");
+		//System.out.println("Found " + numberParts + " parts");
 	}
 	
 	public Graph build() {
@@ -86,6 +91,9 @@ public class GraphBuilder {
 		
 		for(int x = x0; x < x0 + w; x++) {
 			for(int y = y0; y < y0 + h; y++) {
+				if(!solution.isFree(x, y)){
+					return false;
+				}
 				switch(pb.pizza[x][y]) {
 				case HAM:
 					countHam++;
@@ -96,7 +104,7 @@ public class GraphBuilder {
 			}				
 		}
 
-		if(countHam == 3)
+		if(countHam == 3 && countHam<=maxHam)
 			return true;
 		return false;
 	}	
