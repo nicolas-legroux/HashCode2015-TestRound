@@ -1,4 +1,3 @@
-
 public class Part {
 	
 	int left;
@@ -6,11 +5,11 @@ public class Part {
 	int top;
 	int bottom;
 	
-	Part(int i, int j, int width, int height) {
-		left = j;
-		right = j + width - 1;
-		top = i;
-		bottom = i + height - 1;
+	Part(int x0, int y0, int width, int height) {
+		left = x0;
+		right = x0 + width - 1;
+		top = y0;
+		bottom = y0 + height - 1;
 	}
 
     @Override
@@ -21,6 +20,7 @@ public class Part {
         return left == key.left && right == key.right && top == key.top && bottom == key.bottom;
     }
 
+    /*
     @Override
     public int hashCode() {
         int result = left;
@@ -28,7 +28,7 @@ public class Part {
         result = 61 * result + top;
         result = 61 * result + bottom;
         return result;
-    }
+    }*/
 	
 	boolean contains(int x, int y) {
 		return x >= left && x <= right && y >= top && y <= bottom;
@@ -37,5 +37,4 @@ public class Part {
 	void print() {
 		System.out.print("{left=" + left + ", right=" + right + ", top=" + top + ", bottom=" + bottom + "}");
 	}
-
 }

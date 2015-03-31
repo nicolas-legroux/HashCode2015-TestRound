@@ -7,29 +7,34 @@ public class Graph {
 	HashMap<Part, HashSet<Part> > graph;
 	
 	Graph() {
-		graph = new HashMap<Part, HashSet<Part> >();
+		graph = new HashMap< Part, HashSet<Part> >();
 	}
 	
-	HashSet<Part> addNode(Part p) {
-		HashSet<Part> s = graph.get(p);
-		if (s == null) {
-			s = new HashSet<Part>();
-			graph.put(p, s);
+	void addPart(Part p){		
+		if(graph.get(p)==null){			
+			graph.put(p, new HashSet<Part>());	
 		}
-		return s;
+		else{
+			System.out.println("The part is already in the graph");
+			p.print();
+		}
+	}
+	
+	HashSet<Part> getNeighbors(Part p) {
+		return graph.get(p);
 	}
 	
 	private void addDirectedEdge(Part p1, Part p2) {
-		HashSet<Part> s1 = addNode(p1);
+		HashSet<Part> s1 = getNeighbors(p1);
 		s1.add(p2);		
 	}
 	
-	void addUndirectedEdge(Part p1, Part p2) {		
+	public void addUndirectedEdge(Part p1, Part p2) {		
 		addDirectedEdge(p1, p2);
 		addDirectedEdge(p2, p1);
 	}
 	
-	void print() {
+	public void print() {
 		int numberOfEdges = 0;
 		for (Entry<Part, HashSet<Part>> e : graph.entrySet()) {
 			e.getKey().print();

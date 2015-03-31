@@ -6,47 +6,34 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
 
-
 public class ColorGraph {
 
 	HashMap<Part, Integer> neighbors;
+	Problem pb;
 	
-	class CompareParts implements Comparator<Part> {
-		
-		ColorGraph colorizer;
-		
-		CompareParts(ColorGraph colorizer) {
-			this.colorizer = colorizer;
-		}
-
-		@Override
-		public int compare(Part arg0, Part arg1) {
-			return colorizer.neighbors.get(arg0) - colorizer.neighbors.get(arg1);
-		}
-	}
-	
-	static Solution color(Graph g) {
-		ColorGraph colorizer = new ColorGraph();
+	static Solution color(Graph g, Problem pb) {
+		ColorGraph colorizer = new ColorGraph(pb);
 		return colorizer.doColor(g);
 	}
 	
-	private ColorGraph() {
+	private ColorGraph(Problem pb) {
+		this.pb = pb;
 		neighbors = new HashMap<Part, Integer>();
 	}
 	
 	private Solution doColor(Graph g) {
-		Solution solution = new Solution();
-
-		//HashSet<Part> queue = new HashSet<Part>();
+		
+		Solution solution = new Solution(pb);
 		
 		for (Entry<Part, HashSet<Part>> e : g.graph.entrySet()) {
-			neighbors.put(e.getKey(), e.getValue().size());
-			//queue.add(e.getKey());
+			neighbors.put(e.getKey(), e.getValue().size());			
 		}
 		
 		int count = g.graph.size();
 		
 		while (!neighbors.isEmpty()) {
+			
+			//Part1 is "smaller" than Part2 if it has a larger size. If they have the same size, we take the part with the least neighbors in the graph 
 			Entry<Part, Integer> min = Collections.min(neighbors.entrySet(), new Comparator<Entry<Part, Integer>>() {
 			    public int compare(Entry<Part, Integer> entry1, Entry<Part, Integer> entry2) {
 			    	int s1 = (entry1.getKey().right + 1 - entry1.getKey().left)
@@ -56,11 +43,13 @@ public class ColorGraph {
 			    	if (s1 == s2)
 			    		return entry1.getValue().compareTo(entry2.getValue());
 			    	else
-			    		return s2 - s1;
+			    		return s2 - s1; 
 			    }
+			    
 			});
 			
 			Part p = min.getKey();
+			//Add the part to the solution
 			solution.parts.add(p);
 			
 			count -= 1 + neighbors.get(p);
@@ -71,29 +60,18 @@ public class ColorGraph {
 			for (Part part : n) {
 				neighbors.remove(part);
 			}
-			//*/
-
-			/*
-			for (Part part : n) {
-				queue.remove(part);
-			}
-			//*/
 			
 			for (Part part : n) {
 				for (Part _part : g.graph.get(part)) {
-					if (neighbors.containsKey(_part)) {
-						//if (!g.graph.get(_part).remove(part))
-							//System.err.println("Missing edge !");
-						neighbors.put(_part, neighbors.get(_part) - 1);
-						//queue.add(_part);
+					if (neighbors.containsKey(_part)) {						
+						neighbors.put(_part, neighbors.get(_part) - 1);						
 					}
 				}
 			}
 			
-			System.out.println("Remaining nodes : " + count);
+			//System.out.println("Remaining nodes : " + count);
 		}
 		
 		return solution;
 	}
-
 }

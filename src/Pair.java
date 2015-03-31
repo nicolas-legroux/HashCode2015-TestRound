@@ -8,18 +8,21 @@ public class Pair {
         this.y = y;
     }
 
-    @Override
+    @Override    
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Pair)) return false;
         Pair key = (Pair) o;
-        return x == key.x && y == key.y;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = x;
-        result = 61 * result + y;
-        return result;
+        if(x == key.x && y == key.y){        	
+        	return true;
+        }
+        else{        	
+        	return false;
+        }    
+    }  
+    
+    @Override 
+    public int hashCode(){
+    	return y*60+x;
     }
 }

@@ -11,19 +11,20 @@ public class Test {
 		
 		Problem p = new Problem();
 		p.load("data/test_round.in");		
-		p.print();	
-
+		p.print();		
+	    		
 		GraphBuilder gb = new GraphBuilder(p);
+		long startTimeGraphBuilding = System.currentTimeMillis();
 		Graph graph = gb.build();
-		graph.print();
-		
-		/*
-		
-		Solution solution = ColorGraph.color(graph);
-		solution.print(problem);
+		long endTimeGraphBuilding = System.currentTimeMillis();
+		System.out.println("Time to build the graph : " + (endTimeGraphBuilding-startTimeGraphBuilding) + "ms");
+		//graph.print();	
+	
+		Solution solution = ColorGraph.color(graph, p);
+		solution.print(p);
 
 		solution.save("data/result.txt");
-		*/
+		
 	}
 
 }
