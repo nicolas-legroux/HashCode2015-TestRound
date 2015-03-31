@@ -14,7 +14,7 @@ public class Test {
 		p.print();		
 	
 		ColorGraph colorGraphSolver = new ColorGraph(p);
-		colorGraphSolver.solveWithRandomRemovals(0.30, 10000);
+		colorGraphSolver.solveWithRandomRemovals(0.6, 100000);
 		Solution solution = colorGraphSolver.getSolution();
 		
 		solution.print();

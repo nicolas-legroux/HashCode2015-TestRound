@@ -26,7 +26,7 @@ public class ColorGraph {
 		Graph g = gb.build();
 		long endTimeGraphBuilding = System.currentTimeMillis();
 		System.out.println("Time to build the graph : " + (endTimeGraphBuilding-startTimeGraphBuilding) + "ms");
-		//graph.print();	
+		g.print();	
 		
 		for (Entry<Part, HashSet<Part>> e : g.graph.entrySet()) {
 			neighbors.put(e.getKey(), e.getValue().size());			
@@ -86,16 +86,23 @@ public class ColorGraph {
 		//Start initial solver
 		bestSolution = solve(bestSolution, 3);
 		
+		int bestEverSolution = bestSolution.getScore();
+		int countNoProgression = 0;
+		
 		double probChange = prob;
 		
+		int resetCounter = 0;
+		
+		int i=1;
+		
+		Random random = new Random(25);
+		
 		//Iterate
-		for(int i=0; i<max_iterations; i++){
+		while(true){
 			
 			//Copy the best solution
 			Solution baseSolution = new Solution(bestSolution);
-			HashSet<Part> parts = new HashSet<Part>();
-			
-			Random random = new Random(25);
+			HashSet<Part> parts = new HashSet<Part>();			
 			
 			for(Part p : baseSolution.getParts()){
 				if(random.nextDouble()<=probChange){
@@ -104,35 +111,60 @@ public class ColorGraph {
 			}
 			
 			baseSolution.resetParts(parts);
-			baseSolution = solve(baseSolution, 7);
 			
-			System.out.println("Iteration #" + (i+1));
+			System.out.println("Iteration #" + (i));
+			i++;
+			
+			if(bestSolution.getScore()>9600){
+				baseSolution = solve(baseSolution, 8);
+				System.out.println("Solving with more than 3 Hams / piece");
+			}
+			
+			else{
+				baseSolution = solve(baseSolution, 3);
+			}			
 			
 			if(baseSolution.getScore()>=bestSolution.getScore()){
-				System.out.println("Improved the score : " + bestSolution.getScore() + " -> " + baseSolution.getScore());
+				System.out.println("Score : " + bestSolution.getScore() + " -> " + baseSolution.getScore());
 				if(baseSolution.getScore()>bestSolution.getScore()){
+					countNoProgression = 0;
 					System.out.println("Writing to file...");
 					try {
-						baseSolution.save("results.txt");
+						baseSolution.save("results" + resetCounter + ".txt");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
+				else{
+					countNoProgression++;
+					System.out.println("No progression for the " + countNoProgression + "th time");
+					if(countNoProgression>=100){
+						countNoProgression = 0;
+						if (bestSolution.getScore()>bestEverSolution){
+							bestEverSolution = bestSolution.getScore();
+						}
+						
+						//Reset
+						baseSolution = new Solution(pb);
+						resetCounter++;					
+					}
+				}
+				
 				bestSolution = baseSolution;
 				probChange = prob;				
 			}	
 			else{
 				System.out.println("Did not improve best score which is : " + bestSolution.getScore());
 				probChange = Math.min((probChange + 0.02), 1.0);
+				
 			}
 			
+			System.out.println("Resetted the solution " + resetCounter + " times");
+			System.out.println("Best ever solution is " + bestEverSolution);
 			System.out.println("For the next iteration, p=" + probChange);
 			System.out.println("\n");
-		}
-		
-		
-		
+		}		
 	}
 	
 	Solution getSolution(){

@@ -104,7 +104,7 @@ public class GraphBuilder {
 			}				
 		}
 
-		if(countHam == 3 && countHam<=maxHam)
+		if(countHam >= 3 && countHam<=maxHam)
 			return true;
 		return false;
 	}	

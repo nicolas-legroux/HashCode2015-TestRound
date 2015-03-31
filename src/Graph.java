@@ -35,14 +35,16 @@ public class Graph {
 	}
 	
 	public void print() {
+		
 		int numberOfEdges = 0;
 		for (Entry<Part, HashSet<Part>> e : graph.entrySet()) {
-			e.getKey().print();
-			System.out.print(" -> " + e.getValue().size());
-			System.out.print("\n");
+			//e.getKey().print();
+			//System.out.print(" -> " + e.getValue().size());
+			//System.out.print("\n");
 			numberOfEdges += e.getValue().size();
 		}
-		System.out.println("Graph statistics : ");
+		
+		//System.out.println("Graph statistics : ");
 		System.out.println("Number of nodes : " + graph.size());
 		System.out.println("Number of edges : " + numberOfEdges);
 	}
