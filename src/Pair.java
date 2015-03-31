@@ -22,5 +22,4 @@ public class Pair {
         result = 61 * result + y;
         return result;
     }
-
 }

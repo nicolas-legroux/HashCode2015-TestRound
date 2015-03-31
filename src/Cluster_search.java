@@ -21,7 +21,7 @@ public class Cluster_search {
 		
 		for (int i=0;i<pb.height;i++){
 			for (int j=0;j<pb.width;j++){
-				if(clusters[i][j]==0 && pb.map[i][j].equals(Problem.Type.Jambon)){
+				if(clusters[i][j]==0 && pb.pizza[i][j].equals(Problem.PizzaTopping.HAM)){
 					trouverCluster(i,j, cluster_compt);
 				}
 					
@@ -35,7 +35,7 @@ public class Cluster_search {
 		for (int i=0;i<6;i++){
 			for (int j=0;j<6;j++){
 				if (ham_compt<3){
-					if(pb.map[a+i][b+j].equals(Problem.Type.Jambon)){
+					if(pb.pizza[a+i][b+j].equals(Problem.PizzaTopping.HAM)){
 						ham_compt++;
 						clusters[i][j]=compt;
 						if (i<c.r1 && ham_compt==2){

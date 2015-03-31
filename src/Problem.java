@@ -5,15 +5,15 @@ import java.io.IOException;
 
 public class Problem {
 	
-	enum Type {
-		Jambon, Tomates
+	enum PizzaTopping {
+		HAM, TOMATOES
 	}
 	
 	int width;
 	int height;
 	int min_ham;
 	int surf_max;
-	Type[][] map;
+	PizzaTopping[][] pizza;
 	
 
 	void load(String filename) throws IOException {
@@ -24,20 +24,18 @@ public class Problem {
 		height=Integer.parseInt(ParsedData[0]);
 		width=Integer.parseInt(ParsedData[1]);
 		min_ham=Integer.parseInt(ParsedData[2]);
-		surf_max=Integer.parseInt(ParsedData[3]);
+		surf_max=Integer.parseInt(ParsedData[3]);		
 		
-		
-		
-		map=new Type[height][width];
+		pizza=new PizzaTopping[height][width];
 		
 		for (int i=0;i<height;i++){
 			pizzaData=data.readLine();
 			
 			for (int j=0;j<width;j++){
-				map[i][j]=Type.Tomates;
+				pizza[i][j]=PizzaTopping.TOMATOES;
 				String c=pizzaData.substring(j, j+1);
 				if (c.equals("H")){
-					map[i][j]=Type.Jambon;
+					pizza[i][j]=PizzaTopping.HAM;
 				}
 			}
 		}		
@@ -46,11 +44,11 @@ public class Problem {
 	void print(){
 		for(int i=0; i< height; i++){
 			for(int j=0; j<width; j++){
-				if (map[i][j] == Type.Jambon){
-					System.out.print("H ");
+				if (pizza[i][j] == PizzaTopping.HAM){
+					System.out.print("H");
 				}
 				else{
-					System.out.print("T ");
+					System.out.print("T");
 				}
 			}
 			

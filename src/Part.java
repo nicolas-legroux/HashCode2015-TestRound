@@ -35,7 +35,7 @@ public class Part {
 	}
 	
 	void print() {
-		System.out.print("{" + left + ", " + right + ", " + top + ", " + bottom + "}");
+		System.out.print("{left=" + left + ", right=" + right + ", top=" + top + ", bottom=" + bottom + "}");
 	}
 
 }
