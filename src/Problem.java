@@ -14,15 +14,18 @@ public class Problem {
 	int surf_max;
 	PizzaTopping[][] pizza;
 	
+	//For stats
+	int numberOfHam = 0;
+	
 	void load(String filename) throws IOException {
-		// TODO
+		
 		BufferedReader data = new BufferedReader(new FileReader(filename));
 		String pizzaData = data.readLine();
 		String[] ParsedData = pizzaData.split(" ");
 		height = Integer.parseInt(ParsedData[0]);
 		width = Integer.parseInt(ParsedData[1]);
 		min_ham = Integer.parseInt(ParsedData[2]);
-		surf_max = Integer.parseInt(ParsedData[3]);		
+		surf_max = Integer.parseInt(ParsedData[3]);	
 		
 		pizza = new PizzaTopping[width][height];
 		
@@ -33,10 +36,11 @@ public class Problem {
 				pizza[x][y]=PizzaTopping.TOMATOES;
 				String c=pizzaData.substring(x, x+1);
 				if (c.equals("H")){
+					numberOfHam++;
 					pizza[x][y]=PizzaTopping.HAM;
 				}
 			}
-		}		
+		}			
 	}
 	
 	void print(){

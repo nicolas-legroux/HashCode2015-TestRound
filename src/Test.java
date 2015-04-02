@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Random;
 
 
 public class Test {
@@ -9,16 +10,16 @@ public class Test {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-		Problem p = new Problem();
-		p.load("data/test_round.in");		
-		p.print();		
-	
-		ColorGraph colorGraphSolver = new ColorGraph(p);
-		colorGraphSolver.solveWithRandomRemovals(0.6, 100000);
-		Solution solution = colorGraphSolver.getSolution();
+		Random random = new Random(25);
 		
-		solution.print();
-		solution.save("result.txt");	
+		Problem pb = new Problem();
+		pb.load("data/test_round.in");		
+		//pb.print();
+		
+		if(args.length>0){
+			Solution solution = Solution.loadFromFile(args[0], pb);	
+			ColorGraph colorGraphSolver = new ColorGraph(pb, solution);
+			colorGraphSolver.solveWithRandomRemovals(0.8, 1000000);	
+		}			
 	}
-
 }
